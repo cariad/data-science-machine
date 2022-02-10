@@ -18,6 +18,22 @@ if [ -d "${target_dir:?}" ]; then
   git pull
 else
   git clone https://github.com/cariad/data-science-machine.git "${target_dir:?}"
+
+
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+  echo "!!!!!!!"
+
+  git checkout initial
+
   cd "${target_dir:?}"
 fi
 
