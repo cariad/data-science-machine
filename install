@@ -81,4 +81,5 @@ sudo cp ./bin/* /usr/local/bin
 sudo apt autoremove -y
 
 echo
-echo "Data Science machine successfully deployed!"
+echo "🎉 Installation nearly complete! Log out then back in to finish."
+echo
