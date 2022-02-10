@@ -3,25 +3,27 @@ set -euo pipefail
 
 sudo apt install -y unzip
 
-curl https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh -o conda.sh
+if [ "$(conda --version)" != "conda 4.10.3" ]; then
+  curl https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh -o conda.sh
 
-if [[ "$(sha256sum conda.sh)" != "fedf9e340039557f7b5e8a8a86affa9d299f5e9820144bd7b92ae9f7ee08ac60  conda.sh" ]]; then
-  echo "Anaconda hash failed."
-  exit 1
+  if [[ "$(sha256sum conda.sh)" != "fedf9e340039557f7b5e8a8a86affa9d299f5e9820144bd7b92ae9f7ee08ac60  conda.sh" ]]; then
+    echo "Anaconda hash failed."
+    exit 1
+  fi
+
+  chmod +x conda.sh
+
+  # -b = batch (noninteractive)
+  bash ./conda.sh -b
+
+  rm ./conda.sh
+
+  # Activate conda for this sesion only:
+  eval "$(${HOME:?}/anaconda3/bin/conda shell.bash hook)"
+
+  # Activate conda in future sessions:
+  conda init
 fi
-
-chmod +x conda.sh
-
-# -b = noninteractive
-bash ./conda.sh -b
-
-rm ./conda.sh
-
-# Activate conda for this sesion only:
-eval "$(${HOME:?}/anaconda3/bin/conda shell.bash hook)"
-
-# Activate conda in future sessions:
-conda init
 
 #
 # AWS CLI
@@ -40,8 +42,7 @@ rm -f /tmp/aws.zip
 
 pushd /tmp
 
-if command -v aws &> /dev/null
-then
+if command -v aws &> /dev/null; then
   sudo ./aws/install --update
 else
   sudo ./aws/install
@@ -50,8 +51,6 @@ fi
 popd
 
 rm -rf /tmp/aws
-
-
 
 # rm -rf aws
 # popd > /dev/null
