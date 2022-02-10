@@ -19,21 +19,6 @@ if [ -d "${target_dir:?}" ]; then
 else
   git clone https://github.com/cariad/data-science-machine.git "${target_dir:?}"
   cd "${target_dir:?}"
-
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-  echo "!!!!!!!"
-
-  git fetch
-  git checkout initial
 fi
 
 ./install
