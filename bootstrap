@@ -32,6 +32,7 @@ else
   echo "!!!!!!!"
   echo "!!!!!!!"
 
+  git fetch
   git checkout initial
 
   cd "${target_dir:?}"
