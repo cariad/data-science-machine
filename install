@@ -11,7 +11,7 @@ fi
 chmod +x conda.sh
 
 # -b = noninteractive
-./conda.sh -b
+bash ./conda.sh -b
 
 #
 # AWS CLI
