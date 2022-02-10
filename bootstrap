@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$(whoami)" == "root" ]; then
+  echo -e "⚠️ Run this script as your user account, not root."
+  exit 1
+fi
+
+sudo apt update -y
+sudo apt upgrade -y
+
+sudo apt install -y git
+
+target_dir="${HOME:?}/.data-science-machine"
+
+if [ -d "${target_dir:?}" ]; then
+  cd "${target_dir:?}"
+  git pull
+else
+  git clone https://github.com/cariad/data-science-machine.git "${target_dir:?}"
+  cd "${target_dir:?}"
+fi
+
+./install

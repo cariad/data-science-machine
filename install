@@ -1,12 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-sudo apt update -y
-sudo apt upgrade -y
-sudo apt autoremove -y
-
-sudo apt install -y \
-  ca-certificates   \
-  git
 
 curl https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh -o conda.sh
 
@@ -20,20 +13,31 @@ chmod +x conda.sh
 # -b = noninteractive
 ./conda.sh -b
 
-# info "Downloading AWS CLI"
-# wget -O /tmp/aws.zip https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
-# pushd /tmp > /dev/null
-# unzip -oq aws.zip
-# rm aws.zip
+#
+# AWS CLI
+#
 
-# if command -v aws &> /dev/null
-# then
-#   info "Upgrading AWS CLI"
-#   sudo ./aws/install --update
-# else
-#   info "Installing AWS CLI"
-#   sudo ./aws/install
-# fi
+gpg --import data/aws-cli.pub
+
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip     -o /tmp/aws.zip
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip.sig -o /tmp/aws.zip.sig
+
+gpg --verify /tmp/aws.zip.sig /tmp/aws.zip
+rm -rf /tmp/aws.zip.sig
+
+unzip -q /tmp/aws.zip -d /tmp
+rm -f /tmp/aws.zip
+
+if command -v aws &> /dev/null
+then
+  sudo ./aws/install --update
+else
+  sudo ./aws/install
+fi
+
+rm -rf /tmp/aws
+
+
 
 # rm -rf aws
 # popd > /dev/null
@@ -143,3 +147,7 @@ chmod +x conda.sh
 # gpg --import-ownertrust < ~/.machine.secrets/.gnupg/trust.txt
 
 # info "Done!"
+
+sudo apt autoremove -y
+
+echo "Data Science machine successfully deployed!"
