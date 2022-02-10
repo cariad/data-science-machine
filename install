@@ -17,8 +17,11 @@ bash ./conda.sh -b
 
 rm ./conda.sh
 
+# Activate conda for this sesion only:
 eval "$(${HOME:?}/anaconda3/bin/conda shell.bash hook)"
 
+# Activate conda in future sessions:
+conda init
 
 #
 # AWS CLI
@@ -35,12 +38,16 @@ rm -rf /tmp/aws.zip.sig
 unzip -q /tmp/aws.zip -d /tmp
 rm -f /tmp/aws.zip
 
+pushd /tmp
+
 if command -v aws &> /dev/null
 then
   sudo ./aws/install --update
 else
   sudo ./aws/install
 fi
+
+popd
 
 rm -rf /tmp/aws
 
