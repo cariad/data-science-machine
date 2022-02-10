@@ -42,38 +42,6 @@ rm -rf /tmp/aws
 # rm -rf aws
 # popd > /dev/null
 
-# if ! command -v google-chrome &> /dev/null
-# then
-#   info "Installing Chrome"
-#   wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-#   sudo apt install /tmp/chrome.deb -y
-#   rm -rf /tmp/chrome.deb
-#   sudo ln -sf /opt/Obsidian/obsidian /usr/local/bin/obsidian
-# fi
-
-# if ! command -v obsidian &> /dev/null
-# then
-#   info "Installing Obsidian"
-#   # The Obsidian team don't generate .deb installers for every release. They ask
-#   # you to install the latest .deb then upgrade in-app. At the time of writing,
-#   # this is the latest .deb.
-#   wget -O /tmp/obsidian.deb "https://github.com/obsidianmd/obsidian-releases/releases/download/v0.12.15/obsidian_0.12.15_amd64.deb"
-#   sudo apt install /tmp/obsidian.deb -y
-#   rm -rf /tmp/obsidian.deb
-# fi
-
-# if ! command -v code &> /dev/null
-# then
-#   info "Installing Visual Studio Code"
-#   wget -O /tmp/vs.deb "https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64"
-#   sudo apt install /tmp/vs.deb -y
-#   rm /tmp/vs.deb
-# fi
-
-# info "Installing Node.js"
-# curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-# sudo apt-get install -y nodejs
-
 # # Perform all sudos as early as possible so the password is cached ^
 
 # info "Installing home"
