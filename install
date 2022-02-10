@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+#
+# Common tools
+#
+
+sudo apt install -y unzip
+
+#
+# Anaconda
+#
+
+if [ "$(conda --version)" != "conda 4.10.3" ]; then
+  curl https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh -o conda.sh
+
+  if [[ "$(sha256sum conda.sh)" != "fedf9e340039557f7b5e8a8a86affa9d299f5e9820144bd7b92ae9f7ee08ac60  conda.sh" ]]; then
+    echo "Anaconda hash failed."
+    exit 1
+  fi
+
+  chmod +x conda.sh
+
+  # -b = batch (noninteractive)
+  bash ./conda.sh -b
+
+  rm ./conda.sh
+
+  # Activate conda for this sesion only:
+  eval "$(${HOME:?}/anaconda3/bin/conda shell.bash hook)"
+
+  # Activate conda in future sessions:
+  conda init
+fi
+
+#
+# AWS CLI
+#
+
+gpg --import data/aws-cli.pub
+
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip     -o /tmp/aws.zip
+curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip.sig -o /tmp/aws.zip.sig
+
+gpg --verify /tmp/aws.zip.sig /tmp/aws.zip
+rm -rf /tmp/aws.zip.sig
+
+unzip -q /tmp/aws.zip -d /tmp
+rm -f /tmp/aws.zip
+
+pushd /tmp
+
+if command -v aws &> /dev/null; then
+  sudo ./aws/install --update
+else
+  sudo ./aws/install
+fi
+
+popd
+
+rm -rf /tmp/aws
+
+#
+# Python packages
+#
+
+pip install --upgrade wev
+pip install --upgrade wev-awscodeartifact
+
+#
+# Custom scripts
+#
+
+sudo cp ./bin/* /usr/local/bin
+
+#
+# Cleanup
+#
+
+sudo apt autoremove -y
+
+echo
+echo "Data Science machine successfully deployed!"
