@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+sudo apt install -y unzip
+
 curl https://repo.anaconda.com/archive/Anaconda3-2021.11-Linux-x86_64.sh -o conda.sh
 
 if [[ "$(sha256sum conda.sh)" != "fedf9e340039557f7b5e8a8a86affa9d299f5e9820144bd7b92ae9f7ee08ac60  conda.sh" ]]; then
@@ -12,6 +14,11 @@ chmod +x conda.sh
 
 # -b = noninteractive
 bash ./conda.sh -b
+
+rm ./conda.sh
+
+eval "$(${HOME:?}/anaconda3/bin/conda shell.bash hook)"
+
 
 #
 # AWS CLI
