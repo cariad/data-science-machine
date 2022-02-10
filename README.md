@@ -24,6 +24,8 @@ This script has been tested only in Debian 10, as the default operating system f
     sudo apt update -y && sudo apt install curl -y && curl -fsSL https://raw.githubusercontent.com/cariad/data-science-machine/main/bootstrap | bash -
     ```
 
+1. Log out then back in to finalise the installation.
+
 ## How do I…
 
 ### …start Jupyter?
